@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "727684302843",
+    "project_id": "shad-baman",
+    "storage_bucket": "shad-baman.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727684302843:android:a2c8286d50600edaa2ad5e",
+        "android_client_info": {
+          "package_name": "com.example.shad_baman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727684302843-jrdpl472deioinpuot7beac6nn4a97s9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc654c9ZeMj2ws0I3XOeFHnSoZaT-JXco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727684302843-jrdpl472deioinpuot7beac6nn4a97s9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "727684302843-9grso1h9f66gnq50tre64t0sipnl5evs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shadBaman"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
