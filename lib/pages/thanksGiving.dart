@@ -12,7 +12,7 @@ class ThanksGiving extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: kDarkGreenColor,
           title: Text('th'),
         ),
         body: SafeArea(

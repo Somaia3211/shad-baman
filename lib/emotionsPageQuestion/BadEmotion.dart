@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shad_baman/component/buildCheckBox.dart';
+import 'package:shad_baman/component/checkBoxModel.dart';
 import 'package:shad_baman/component/RoundEmotionButton.dart';
+
+import '../constant.dart';
 
 class Bad extends StatefulWidget {
   const Bad({Key? key}) : super(key: key);
@@ -9,96 +14,100 @@ class Bad extends StatefulWidget {
 }
 
 class _BadState extends State<Bad> {
-  List<String> text = [
-    'زنده گی تکراری شده',
-    'تمرکز ندارم ',
-    'برنامه و هدف ندارم',
-    'ناامید هستم',
-    'از همه چیز خسته شدم',
-    'از آینده ترس دارم',
-
+  List<CheckBoxModel> checkboxes = [
+    CheckBoxModel(title: 'زنده گی تکراری شده', value: false),
+    CheckBoxModel(title: 'تمرکز ندارم ', value: false),
+    CheckBoxModel(title: 'برنامه و هدف ندارم', value: false),
+    CheckBoxModel(title: 'از همه چیز خسته شدم', value: false),
+    CheckBoxModel(title: 'ناامید هستم', value: false),
+    CheckBoxModel(title: 'از آینده ترس دارم', value: false),
   ];
+  TextEditingController textController = TextEditingController();
 
-  bool value = false;
-  List<bool> values = [false, false, false, false, false,false];
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title:Text(''),
-        backgroundColor: Colors.pink[400],
-
+        title: Text(''),
+        backgroundColor: Color(0XFFB95940),
       ),
       body: Column(
-children: [
-        EmotionButton(
-        emotion: '😞',
-        emotionText: 'چرا حالت بده؟',
-        onPressed: () {},),
-
-  Expanded(
-    child: ListView.builder(
-        itemCount: text.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                height: 125,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.pinkAccent,
-                ),
-                child: Column(
-                  children: [
-                    CheckboxListTile(
-                      value: values[index],
-                      onChanged: (value) => setState(() {
-                        this.values[index] = value!;
-                      }),
-                      title: Text(
-                        text[index],
-                        style: TextStyle(fontSize: 35),
-                      ),
-                    ),
-                  ],
-                )),
-          );
-        }),
-  ),
-  Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      height: 100,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Colors.pinkAccent
-      ),
-      child: Column(
-
         children: [
-          Text('موارد دیگر',style: TextStyle(
-              fontSize: 20
-          ),),
+          EmotionButton(
+            img: 'assets/sad.jpg',
+           // emotion: '😞',
+            emotionText: 'چرا حالت بده؟',
+            onPressed: () {},
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: checkboxes.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        height: 125,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Color(0XFFDEA170),
+                        ),
+                        child:Column(
+                          children: [
+                            // buildCheckBox(checkboxes[index], index),
+                            BuildCheckBox(checkboxes[index], index, checkboxes,
+                                    (newValue) async {
+                                  setState(() => checkboxes[index] = CheckBoxModel(
+                                      title: checkboxes[index].title,
+                                      value: newValue!));
+                                }),
+                          ],
+                        )),
+                  );
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextButton(
 
-          TextFormField(
-            decoration: InputDecoration(
-              hintText: 'اینجا بنویسید',
-              hintMaxLines: 2,
-              errorMaxLines: 3,
+                  onPressed: () {
+                    press();
+                  },
+                  child: Center(child: Text('ذخیره',style: TextStyle(fontSize: 25),)),
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Color(0XFFB95940),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
 
+                  ),
+
+                ),
+              ],
             ),
           ),
         ],
       ),
-    ),
-  ),
-
-
-
-],
-
-      ),
-
     );
+  }
+
+  press() {
+    List<CheckBoxModel> checked =
+    checkboxes.where((element) => element.value).toList();
+    String result = '';
+    checked.forEach((element) {
+      result = result + element.title+'\n';
+    });
+    FirebaseFirestore.instance.collection("Emotion").add({
+      "checkboxes": result,
+      //"text":textController,
+      "data": DateTime.now().microsecondsSinceEpoch
+    });
+    /*Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePageWidget()),
+    );*/
   }
 }

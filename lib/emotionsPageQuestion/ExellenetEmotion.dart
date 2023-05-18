@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shad_baman/checkBoxClass.dart';
+import 'package:shad_baman/component/buildCheckBox.dart';
+import 'package:shad_baman/component/checkBoxModel.dart';
 import 'package:shad_baman/component/RoundEmotionButton.dart';
-import 'package:shad_baman/component/listTileContent.dart';
+import 'package:shad_baman/constant.dart';
+
+import 'package:shad_baman/homePage.dart';
 
 class Exellent extends StatefulWidget {
   const Exellent({Key? key}) : super(key: key);
@@ -12,91 +16,114 @@ class Exellent extends StatefulWidget {
 }
 
 class _ExellentState extends State<Exellent> {
-  List<String> text = [
-    ' \t  \t☁️ آب وهوا',
-    '\t \t 👪 خانواده ',
-    '\t \t👨🏻‍🤝‍👨🏼 دوستان',
-    '\t  \t👩‍👨‍🏭 همکار',
+  //TextEditingController textController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+  List<CheckBoxModel> checkboxes = [
+    CheckBoxModel(title: '\t  \t☁️ آب وهوا', value: false),
+    CheckBoxModel(title: '\t \t 👪 خانواده ', value: false),
+    CheckBoxModel(title: 'استرسم را کنترول کردم', value: false),
+    CheckBoxModel(title: '\t \t👨🏻‍🤝‍👨🏼 دوستان', value: false),
+    CheckBoxModel(title: '\t  \t👩‍👨‍🏭 همکار', value: false),
   ];
 
-  bool value = false;
-  List<bool> values = [false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
-        backgroundColor: Colors.pink[400],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePageWidget()));
+              },
+              icon: Icon(Icons.person)),
+        ],
+        backgroundColor: Color(0XFF3F7F5C),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           EmotionButton(
-            emotion: '🤗',
+            img:'assets/happy.jpg',
+           // emotion: '🤗',
             emotionText: 'علت عالی بودن تان چیست؟',
             onPressed: () {},
           ),
-        // Content(text: text, value: values, onChanged: (value){})
+          // Content(text: text, value: values, onChanged: (value){})
           Expanded(
             child: ListView.builder(
-                itemCount: text.length,
+              shrinkWrap: true,
+                itemCount: checkboxes.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        height: 125,
+
+                      height: 125,
+
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.pinkAccent,
-                        ),
-                        child: Column(
-                          children: [
-                            CheckboxListTile(
-                              value: values[index],
-                              onChanged: (value) => setState(() {
-                                this.values[index] = value!;
-                              }),
-                              title: Text(
-                                text[index],
-                                style: TextStyle(fontSize: 35),
-                              ),
-                            ),
-                          ],
-                        )),
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color(0XFF48B173),
+                      ),
+                      child: Column(
+                        children: [
+                          BuildCheckBox(checkboxes[index], index, checkboxes,
+                              (newValue) async {
+                            setState(() => checkboxes[index] = CheckBoxModel(
+                                title: checkboxes[index].title,
+                                value: newValue!));
+                          }),
+                        ],
+                      ),
+                    ),
                   );
                 }),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 100,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.pinkAccent
-              ),
-              child: Column(
+            child: Column(
+              children: [
 
-                children: [
-                  Text('موارد دیگر',style: TextStyle(
-                      fontSize: 20
-                  ),),
+                TextButton(
 
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'اینجا بنویسید',
-                      hintMaxLines: 2,
-                      errorMaxLines: 3,
-
+                  onPressed: () {
+                    press();
+                  },
+                  child: Center(child: Text('ذخیره',style: TextStyle(fontSize: 25),)),
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Color(0XFF3F7F5C),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
                     ),
+
                   ),
-                ],
-              ),
+
+                ),
+              ],
             ),
           ),
-
         ],
       ),
     );
+  }
+
+  press() async {
+    List<CheckBoxModel> checked =
+        checkboxes.where((element) => element.value).toList();
+    String result = '';
+    checked.forEach((element) {
+      result = result + element.title+'\n';
+    });
+    await _firestore.collection("Emotion").add({
+      "checkboxes": result,
+      "data": DateTime.now().microsecondsSinceEpoch
+    });
+    /*Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePageWidget()),
+    );*/
   }
 }

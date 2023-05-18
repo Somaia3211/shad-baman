@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shad_baman/pages/Welcome_page.dart';
 import 'package:shad_baman/component/RoundEmotionButton.dart';
+import 'package:shad_baman/constant.dart';
 import 'package:shad_baman/emotionsPageQuestion/BadEmotion.dart';
 import 'package:shad_baman/emotionsPageQuestion/ExellenetEmotion.dart';
 import 'package:shad_baman/emotionsPageQuestion/GoodEmotion.dart';
@@ -15,8 +15,9 @@ class QuestionPage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Center(child: Text("سوالات")),
-          backgroundColor: Color(0XFFEEF444C),
+          backgroundColor:Color(0XFF3F7F5C),
         ),
+        backgroundColor: Colors.white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -31,31 +32,42 @@ class QuestionPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      EmotionButton(
-                        emotion: '🤗',
-                        emotionText: 'عالی',
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Exellent()));
-                        },
+                      Expanded(
+                        child: EmotionButton(
+                          img:'assets/happy.jpg',
+                         // emotion: '🤗',
+                          emotionText: 'عالی',
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Exellent()));
+                          },
+                        ),
                       ),
-                      EmotionButton(
-                        emotion: '😊',
-                        emotionText: 'خوب',
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Good()));
-                        },
+                      
+                      Expanded(
+                        child: EmotionButton(
+                          img:'assets/good.jfif',
+                         // emotion: '😊',
+                          emotionText: 'خوب',
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Good()));
+                          },
+                        ),
                       ),
-                      EmotionButton(
-                        emotion: '😞',
-                        emotionText: 'بد',
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Bad()));
-                        },
+                     
+                      Expanded(
+                        child: EmotionButton(
+                          img:'assets/sad.jpg',
+                          //emotion: '😞',
+                          emotionText: 'بد',
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Bad()));
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -64,6 +76,7 @@ class QuestionPage extends StatelessWidget {
             ),
           ],
         ),
+
       ),
     );
   }

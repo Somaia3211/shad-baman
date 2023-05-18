@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shad_baman/constant.dart';
 import 'package:shad_baman/pages/goals.dart';
 import 'package:shad_baman/pages/smile.dart';
 import 'package:shad_baman/pages/thanksGiving.dart';
@@ -6,14 +7,14 @@ import 'package:shad_baman/pages/walking.dart';
 import 'package:shad_baman/pages/water.dart';
 import 'package:shad_baman/pages/youga.dart';
 
-class Recomindation extends StatefulWidget {
-  const Recomindation({Key? key}) : super(key: key);
+class Recomendation extends StatefulWidget {
+  const Recomendation({Key? key}) : super(key: key);
 
   @override
-  _RecomindationState createState() => _RecomindationState();
+  _RecomendationState createState() => _RecomendationState();
 }
 
-class _RecomindationState extends State<Recomindation> {
+class _RecomendationState extends State<Recomendation> {
   List<String> recomendation = [
     'شکرگزاری',
     'بررسی اهداف',
@@ -26,7 +27,8 @@ class _RecomindationState extends State<Recomindation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: kDarkGreenColor,
+        title: Text('توصیه ها',textAlign: TextAlign.center,),
       ),
       body: Column(
         children: [
@@ -38,8 +40,8 @@ class _RecomindationState extends State<Recomindation> {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.pinkAccent,
+                        borderRadius: BorderRadius.circular(35),
+                        color: kGreenColor,
                       ),
                       height: 140,
                       width: double.infinity,

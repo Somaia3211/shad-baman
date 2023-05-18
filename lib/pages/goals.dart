@@ -13,7 +13,7 @@ class Goals extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Scaffold(
           appBar: AppBar(
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: kDarkGreenColor,
           title:Text('بررسی اهداف')
       ),
               body: ListView.builder(

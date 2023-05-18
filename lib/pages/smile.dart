@@ -9,7 +9,7 @@ class Smile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: kDarkGreenColor,
         title: Text('لبخند بزنید'),
       ),
       body: PageContent(child: Column(

@@ -9,7 +9,7 @@ class Walk extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: kDarkGreenColor,
         title: Text('walking'),
       ),
       body: PageContent(child: Column(

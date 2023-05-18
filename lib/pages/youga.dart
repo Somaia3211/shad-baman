@@ -9,7 +9,7 @@ class Youga extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: kDarkGreenColor,
         title: Text('Yoga'),
       ),
       body: PageContent(child: Column(
